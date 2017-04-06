@@ -57,3 +57,45 @@ function wishdd_settings_page()
 <?php
 
 }
+
+
+function wishdd_save_settings()
+{
+	 /* First param is nonce we declared in wp-job-listing.php 2nd
+	 	is variable security we defined over wishdd-ajax.js.
+	 	Confusing? lol
+	 */
+
+	if(! check_ajax_referer('wp_settings_order','security') )
+	{
+		wp_send_json_error('Invalid Security Token'); //wp builtin funcion to send json data. 
+	}
+	if (! current_user_can('manage_options') )
+	{
+		wp_send_json_error('Hold on a sec, Cow Boy!'); //wp builtin funcion to send json data. 
+	}
+
+	$order_list = $_POST['order'];
+
+	$count = 0;
+
+	foreach($order_list as $order_item)
+	{
+		
+		$content = [	'ID' 		=> (int)$order_item,
+				 		'menu_order'=> $count
+					];
+		wp_update_post($content);
+		
+		$count++;
+	}
+
+	wp_send_json_success('Order Saved.');
+	
+}
+add_action('wp_ajax_save_settings', 'wishdd_save_settings');
+
+/*
+	Action with Dynamic wordpress ajax Hook ---- first hook is from wishdd -ajax.js  " action : 'save_settings' " so
+	it becomes wp_ajax_save_settings
+*/ 

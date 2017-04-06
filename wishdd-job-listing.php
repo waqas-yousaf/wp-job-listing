@@ -55,15 +55,15 @@ function wishdd_add_resources()
 
 	if($pagenow == "edit.php" && $typenow == "job")
 	{
-		wp_enqueue_script( 'reorder-js', plugins_url( 'js/reorder.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20170317', true );
+		wp_enqueue_script( 'wishdd-ajax', plugins_url( 'js/wishdd-ajax.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20170317', true );
 		
-		$wp_localize_array = [	'security'	=> wp_create_nonce('wp_settings_order'),
-								'siteUrl'	=> get_bloginfo('url'),
+		$wp_localize_array = [	'security'		=> wp_create_nonce('wp_settings_order'),
+								'siteUrl'		=> get_bloginfo('url'),
 								'success_msg'	=> __( 'Jobs order saved.' ),
-								'fail_msg'	=> __( 'Error Saving Job Order' )
+								'fail_msg'		=> __( 'Error Saving Job Order' )
 							];
 
-		wp_localize_script( 'reorder-js', 'wishdd_localize', $wp_localize_array );	
+		wp_localize_script( 'wishdd-ajax', 'wishdd_localize', $wp_localize_array );	
 	}
 
 }

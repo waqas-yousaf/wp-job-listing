@@ -15,8 +15,8 @@ jQuery(document).ready(function($) {
 					type 		: 'POST',
 					dataType 	: 'json',
 					data 		: {
-									action : 'save_post',
-									order : sortList.sortable('toArray').toString(),
+									action : 'save_settings',
+									order : sortList.sortable('toArray'),
 									security : wishdd_localize.security
 								   },
 				
@@ -24,8 +24,15 @@ jQuery(document).ready(function($) {
 									{
 										$('div#message').remove();
 										animation.hide();
-										pageTitle.after("<div id='message' class='updated below-h2'><p>" + wishdd_localize.success_msg + "</p></div>");
-										//console.log("success");
+										if(response.success == true)
+										{
+											pageTitle.after("<div id='message' class='updated below-h2'><p>" + wishdd_localize.success_msg + "</p></div>");
+											//console.log('done');
+										}
+										else
+										{
+											pageTitle.after("<div id='message' class='error below-h2'><p>" + wishdd_localize.fail_msg + " </p></div>");
+										}
 									},
 					
 					error		: function(error)
