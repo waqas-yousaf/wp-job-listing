@@ -10,7 +10,7 @@
 	padding: 10px;
 	cursor: move;
 }
-#loading-animation { display: none; }
+#loading-icon { display: none; }
 
 /* Field styles */
 .meta-row {

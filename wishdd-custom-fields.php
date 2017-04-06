@@ -37,7 +37,7 @@
 		<div>
 			<div class='meta-row'>
 				<div class='meta-th'>
-					<label for='job-id' class='row-title'><?php _e("Job ID","wishdd-job-listing") ?></label>	
+					<label for='job-id' class='row-title'><?php _e("Job ID","wishdd_localize") ?></label>	
 				</div>
 				<div class='meta-td'>
 					<input type='text' name='job_id' id='job_id' value='<?= $job_id ?>'>
@@ -46,7 +46,7 @@
 			
 			<div class='meta-row'>
 				<div class='meta-th'>
-					<label for='date_listed' class='row-title'>Date Listed</label>	
+					<label for='date_listed' class='row-title'><?php _e( 'Date Listed', 'wishdd_localize' ) ?></label>	
 				</div>
 				<div class='meta-td'>
 					<input type='text' name='date_listed' id='date_listed' class='date-picker' value='<?= $date_listed ?>'>
@@ -55,7 +55,7 @@
 		
 			<div class='meta-row'>
 				<div class='meta-th'>
-					<label for='deadline' class='row-title'>Application Deadline</label>	
+					<label for='deadline' class='row-title'><?php _e( 'Application Deadline', 'wishdd_localize' ) ?></label>	
 				</div>
 				<div class='meta-td'>
 					<input type='text' name='deadline' id='deadline' class='date-picker' value='<?= $deadline ?>'>
@@ -64,7 +64,7 @@
 
 		<div class='meta-row'>
 			<div class='meta-th'>
-				<span>Principle Duties</span>
+				<span><?php _e( 'Principle Duties', 'wishdd_localize' ) ?></span>
 			</div>
 		</div>
 		<div class="meta-editor">
@@ -78,7 +78,7 @@
 		</div>
 		<div class="meta-row">
 	        <div class="meta-th">
-	          <label for="minimum-requirements" class="wishdd-row-title"><?php _e( 'Minimum Requirements', 'wp-job-listing' ) ?></label>
+	          <label for="minimum-requirements" class="wishdd-row-title"><?php _e( 'Minimum Requirements', 'wishdd_localize' ) ?></label>
 	        </div>
 	        <div class="meta-td">
 	          <textarea name="min_req" class="wishdd-textarea" id="minimum-requirements"><?= $min_req ?></textarea>
@@ -86,7 +86,7 @@
 	    </div>
 	    <div class="meta-row">
         	<div class="meta-th">
-	          <label for="preferred-requirements" class="wishdd-row-title"><?php _e( 'Preferred Requirements', 'wp-job-listing' ) ?></label>
+	          <label for="preferred-requirements" class="wishdd-row-title"><?php _e( 'Preferred Requirements', 'wishdd_localize' ) ?></label>
 	        </div>
 	        <div class="meta-td">
 	          <textarea name="pre_req" class="wishdd-textarea" id="preferred-requirements"><?= $pre_req ?></textarea>
@@ -94,17 +94,17 @@
 	    </div>
 	    <div class="meta-row">
 	        <div class="meta-th">
-	          <label for="relocation-assistance" class="wishdd-row-title"><?php _e( 'Relocation Assistance', 'wp-job-listing' ) ?></label>
+	          <label for="relocation-assistance" class="wishdd-row-title"><?php _e( 'Relocation Assistance', 'wishdd_localize' ) ?></label>
 	        </div>
 	        <div class="meta-td">
 	          <select name="relocation" id="relocation-assistance">
 		          
 		          <option value="Yes" <?php selected( $relocation , 'Yes' ); ?> >
-		          	<?php _e( 'Yes', 'wp-job-listing' )?>
+		          	<?php _e( 'Yes', 'wishdd_localize' )?>
 		          </option>
 		          
 		          <option value="No" <?php  selected( $relocation , 'No' ); ?> >
-		          	<?php _e( 'No', 'wp-job-listing' )?>
+		          	<?php _e( 'No', 'wishdd_localize' )?>
 		          
 		          </option>
 	          </select>
