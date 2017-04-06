@@ -1,20 +1,29 @@
 <?php
-
-	// WP SHORT CODES EXAMPLE 
-	// Using [wishdd_first title="ABCD"] on a page
-
-	function wishdd_first_shortcode($attributes, $content = null)
+	
+	function wishdd_job_taxonomy_list($atts, $content = null)
 	{
-		
-		$attributes = shortcode_atts(["title" => "Default Title", "src" => "http://google.com"] , $attributes); //default values for shortcode parameters
+		$atts = shortcode_atts(['title' => 'Jobs Openings Availible at '
 
-		return 	"<h3>".$attributes["title"]."</h3>".
-				"<a href='".$attributes["src"]."'> Link </a> <br />".
-				$content;
+								], $atts);
+
+		$locations = get_terms('Location');
+
+		if(!empty($locations) && !is_wp_error($locations))
+		{
+			$output  = "<div id='job-location-list'>";
+			$output .= "<h4>".esc_html__($atts['title'])."</h4> <ul>";
+
+			foreach($locations as $location)
+			{
+				$output .= "<li id='job-location'><a href='" .esc_url(get_term_link($location)). "'>";
+				$output .= esc_html__($location->name). "</a></li>";
+			}
+
+			$output .= "</ul> </div>";
+
+			return $output;
+			//print_r($locations);
+		}
 	}
 
-	add_shortcode("wishdd_first", "wishdd_first_shortcode");
-	
-	// write [wishdd_first] anywhere on some page, it would show simply "My First Short Code" 
-	// Try not using print or echo for output because it would simple showup before post content. Use return instead
-	// If you use [wishdd_first] blah blah blah [/wishdd_first] blah blah blah will be passed on as $content
+	add_shortcode("wishdd_jobs_list", "wishdd_job_taxonomy_list");
