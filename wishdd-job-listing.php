@@ -24,6 +24,9 @@ require_once ( plugin_dir_path(__FILE__) . "wishdd-custom-fields.php");
 // Load Settings Page
 require_once ( plugin_dir_path(__FILE__) . "wishdd-settings.php");
 
+// Load Shortcodes Page
+require_once ( plugin_dir_path(__FILE__) . "wishdd-shortcodes.php");
+
 
 
 //Adding Resouces

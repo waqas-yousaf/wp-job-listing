@@ -1,8 +1,8 @@
 jQuery(document).ready(function($) {
 
-	var sortList = $( 'ul#custom-type-list' );  
-	var animation = $( '#loading-icon' );
-	var pageTitle = $( 'div h2' );
+	var sortList	= $( 'ul#custom-type-list' );  
+	var animation	= $( '#loading-icon' );
+	var pageTitle	= $( 'div h2' );
 
 	sortList.sortable({
 			update: function (event , UI)
@@ -15,9 +15,9 @@ jQuery(document).ready(function($) {
 					type 		: 'POST',
 					dataType 	: 'json',
 					data 		: {
-									action : 'save_settings',
-									order : sortList.sortable('toArray'),
-									security : wishdd_localize.security
+									action : 'save_settings', // will be used as a dynamic hook in wishdd-settings.php
+									order : sortList.sortable('toArray'), 
+									security : wishdd_localize.security	// check out wishdd-job-listing wp_localize_script to understand this
 								   },
 				
 					success		: function(response)
