@@ -137,4 +137,4 @@ function wishdd_load_template($original_template)
 	return $original_template;
 }
 
-add_action('template_include','wishdd_load_template');
+//add_action('template_include','wishdd_load_template');
