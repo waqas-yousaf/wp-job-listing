@@ -42,38 +42,37 @@ function wishdd_job_by_location($atts, $content = null)
 		$atts = shortcode_atts(['title' 		=> 'Jobs Openings Availible at ',
 								'count' 		=> 5 ,
 								'location'		=> '',
-								'pagination'	=> false
+								'pagination'	=> 'on'
 								], $atts);
 
-		$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+		$paged 		= get_query_var('paged') ? get_query_var('paged') : 1;
+		$pagination = $atts[ 'pagination' ]  == 'on' ? false : true;
 
 		$args = [	'post_type'				 => 'job',
 					'post_status'			 => 'publish',
-					'orderby'			   	 => 'menu_order',	// Order By
-					'order'					 => 'ASC',			// Ascending
-					'no_found_rows' 		 => $atts['pagination'],
+					'no_found_rows' 		 => $pagination,
 					'posts_per_page' 		 => $atts['count'],
 					'paged'					 => $paged,
 					'tax_query'				 => ['taxonony' => 'location',
-												 'field' => 'slug',
-												 'terms' => $atts['location']
+												 'field' 	=> 'slug',
+												 'terms'	=> $atts['location']
 												]
 
 				];
 
-		$jobs_locations = new WP_Query($args);
+		$wp_query = new WP_Query($args);
 
 
 		$location = str_replace ('-', ' ', $atts['location']);
 		$title 	  = esc_html__($atts['title']);
 		$location = esc_html__($atts['location']);
 		
-		if( $jobs_locations-> have_posts())
+		if( $wp_query-> have_posts())
 		{
 			$output  = "<div id='job-location-list'>";
 			$output .= "<h4>".$title."  " .$location." </h4> <ul>";
 
-			while ($jobs_locations-> have_posts()) : $jobs_locations-> the_post();
+			while ($wp_query-> have_posts()) : $wp_query-> the_post();
 
 			global $post;
 
@@ -92,10 +91,29 @@ function wishdd_job_by_location($atts, $content = null)
 		}
 
 		wp_reset_postdata();
+		$max_pages = $wp_query->max_num_pages;
+
+		if($max_pages > 1 && is_page() )
+		{
+			$output .= "<nav class='prev-next-posts'>";
+
+			$output .= "<div class='nav-previous'>";
+			$output .= get_next_posts_link(__("<span class='meta-nav'>&larr;</span> Previous"), $max_pages );
+			$output .= "</div>";
+
+			$output .= "<div class='next-post-links'>";
+			$output .= get_previous_posts_link(__("<span class='meta-nav'> &rarr; </span>Next")	);
+			$output .= "</div> </nav>";
+
+
+		}
+
 		return $output;
 
 }
 
 add_shortcode("wishdd_job_by_location", "wishdd_job_by_location");
+
+
 
 
