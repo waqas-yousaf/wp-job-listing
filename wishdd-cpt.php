@@ -104,3 +104,37 @@ $labels = [	'name'                       => $plural,
 
 // --- Register Taxonomy Function
 add_action('init', 'wishdd_taxonomy_location');
+
+
+//--- Template Including
+function wishdd_load_template($original_template)
+{
+	if(get_query_var('post_type' !== 'job'))
+	{
+		return;
+	}
+
+	if(is_archive() || is_search())
+	{
+		if(file_exists(get_stylesheet_directory()."/archive-job.php"))
+			return get_stylesheet_directory()."/archive-job.php";
+		else
+			return plugin_dir_path(__FILE__)."templates/archive-job.php";
+	}
+	elseif(is_singular('job'))
+	{
+		if(file_exists(get_stylesheet_directory()."/single-job.php"))
+			return get_stylesheet_directory()."/single-job.php";
+		else
+			return plugin_dir_path(__FILE__)."templates/single-job.php";
+	
+	}
+	else
+	{
+       	return get_page_template();
+     }
+
+	return $original_template;
+}
+
+add_action('template_include','wishdd_load_template');

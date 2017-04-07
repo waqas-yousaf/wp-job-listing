@@ -2,9 +2,7 @@
 	
 	function wishdd_locations_list($atts, $content = null)
 	{
-		$atts = shortcode_atts(['title' => 'Jobs Openings Availible at '
-
-								], $atts);
+		$atts = shortcode_atts(['title' => 'Jobs Openings Availible at '], $atts);
 
 		$title = esc_html__($atts['title']);
 	
@@ -37,61 +35,65 @@ add_shortcode("wishdd_locations_list", "wishdd_locations_list");
 function wishdd_job_by_location($atts, $content = null)
 {
 	if(! isset($atts['location']))
-		return '<p class="job-error">Please set a location</p>';
+		return '<p class="job-error"> Please set a location</p>';
 
-		$atts = shortcode_atts(['title' 		=> 'Jobs Openings Availible at ',
-								'count' 		=> 5 ,
-								'location'		=> '',
-								'pagination'	=> 'on'
+		$atts = shortcode_atts(['title'		=> 'Jobs Openings Availible at ',
+								'count'		=> 7 ,
+								'location'	=> '',
+								'pagination'=> 'on'
 								], $atts);
 
 		$paged 		= get_query_var('paged') ? get_query_var('paged') : 1;
 		$pagination = $atts[ 'pagination' ]  == 'on' ? false : true;
 
-		$args = [	'post_type'				 => 'job',
-					'post_status'			 => 'publish',
-					'no_found_rows' 		 => $pagination,
-					'posts_per_page' 		 => $atts['count'],
-					'paged'					 => $paged,
-					'tax_query'				 => ['taxonony' => 'location',
-												 'field' 	=> 'slug',
-												 'terms'	=> $atts['location']
-												]
+		$args = [	'post_type'		=> 'job',
+					'post_status'	=> 'publish',
+					'no_found_rows'	=> $pagination,
+					'posts_per_page'=> $atts['count'],
+					'paged'			=> $paged,
+					'tax_query'		=> ['taxonony' => 'location',
+										'field' 	=> 'slug',
+										'terms'	=> $atts['location']
+										]
 
 				];
 
-		$wp_query = new WP_Query($args);
-
+		$jobs_location = new WP_Query($args);
 
 		$location = str_replace ('-', ' ', $atts['location']);
 		$title 	  = esc_html__($atts['title']);
 		$location = esc_html__($atts['location']);
 		
-		if( $wp_query-> have_posts())
+		if( $jobs_location-> have_posts())
 		{
 			$output  = "<div id='job-location-list'>";
 			$output .= "<h4>".$title."  " .$location." </h4> <ul>";
 
-			while ($wp_query-> have_posts()) : $wp_query-> the_post();
+			while ($jobs_location-> have_posts()) : $jobs_location-> the_post();
 
-			global $post;
+				global $post;
 
-			$deadline	= esc_html__(get_post_meta( get_the_id() , 'deadline', true ));
-			$title		= get_the_title();
-			$url		= esc_url( get_permalink() );
-			
-			$output .= "<li id='job-location'><a href='" .$url. "'>";
-			$output .= $title."</a>";
-			$output .= " // <span>".$deadline. "</span></li>";
+				$deadline	= esc_html__(get_post_meta( get_the_id() , 'deadline', true ));
+				$title		= get_the_title();
+				$url		= esc_url( get_permalink() );
+				
+				$output .= "<li id='job-location'><a href='" . $url . "'>";
+				$output .= $title."</a>";
+				$output .= " - <span>" . $deadline . "</span></li>";
 
 			endwhile;
 			
 			$output .= "</ul> </div>";
 
 		}
+		else
+		{
+			$output .= __( "<p class='job-error'>Sorry, no jobs listed in ".$location." where found.</p>" );
+		}
 
 		wp_reset_postdata();
-		$max_pages = $wp_query->max_num_pages;
+
+		$max_pages = $jobs_location->max_num_pages;
 
 		if($max_pages > 1 && is_page() )
 		{
@@ -112,7 +114,7 @@ function wishdd_job_by_location($atts, $content = null)
 
 }
 
-add_shortcode("wishdd_job_by_location", "wishdd_job_by_location");
+add_shortcode("wishdd_by_location", "wishdd_job_by_location");
 
 
 
